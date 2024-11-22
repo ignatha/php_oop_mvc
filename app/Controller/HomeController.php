@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Services\View;
 use App\Model\User;
+use App\Services\Auth;
 
 class HomeController {
 
@@ -23,7 +24,33 @@ class HomeController {
 
     public function login()
     {
-        echo "ini Halaman Login";
+        $view = new View();
+        echo $view->render('login');
+    }
+
+    public function loginStore()
+    {
+        $user = new User();
+
+        $data_user = $user->where('username','=',$_REQUEST['username'])->first();
+
+        if(Auth::verifyPassword($_REQUEST['password'],$data_user->password)){
+            Auth::login($data_user);
+
+            header('Location: /');
+            exit;
+        }else {
+            header('Location: /login');
+            exit;
+        }
+
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        header('Location: /login');
+        exit;
     }
 
     public function add()
@@ -40,7 +67,7 @@ class HomeController {
         $simpan = $user->create([
             'username' => $_POST['username'],
             'name' => $_POST['name'],
-            'password' => $_POST['password']
+            'password' => Auth::bcrypt($_POST['password'])
         ]);
 
         if ($simpan) {

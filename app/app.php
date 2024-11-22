@@ -2,12 +2,13 @@
 namespace App;
 
 use App\Services\Route;
-use App\Middleware\{BannedAccount, RedirectIfAuth};
+use App\Middleware\{AuthMiddleware, RedirectIfAuth};
 
 $route = new Route;
 
-$route->get('/','HomeController@index',[RedirectIfAuth::class]);
-$route->get('/login','HomeController@login');
+$route->get('/','HomeController@index',[AuthMiddleware::class]);
+$route->get('/login','HomeController@login',[RedirectIfAuth::class]);
+$route->post('/login','HomeController@loginStore',[RedirectIfAuth::class]);
 
 $route->get('/user/add','HomeController@add');
 $route->post('/user/add','HomeController@store');
@@ -18,6 +19,8 @@ $route->post('/user/update/{id}','HomeController@update');
 $route->post('/user/delete/{id}','HomeController@delete');
 
 $route->get('/home','HomeController@home');
+
+$route->get('/logout','HomeController@logout');
 
 $route->run();
 

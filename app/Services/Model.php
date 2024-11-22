@@ -10,6 +10,7 @@ class Model extends Connection {
     protected $primaryKey;
     protected $fillable = [];
     protected $attributes = [];
+    protected $stmt;
 
     public function all()
     {
@@ -98,13 +99,21 @@ class Model extends Connection {
     {
 
         $sql = "SELECT * FROM {$this->table} WHERE {$column} {$compare} :column";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':column',$value);
+        $this->stmt = $this->connect()->prepare($sql);
+        $this->stmt->bindParam(':column',$value);
 
-        $stmt->execute();
+        return $this;
 
-        return $stmt->fetchAll();
+    }
 
+    public function get(){
+        $this->stmt->execute();
+        return $this->stmt->fetchAll();
+    }
+
+    public function first(){
+        $this->stmt->execute();
+        return $this->stmt->fetch();
     }
 
     

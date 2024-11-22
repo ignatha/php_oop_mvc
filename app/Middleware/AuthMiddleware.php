@@ -5,12 +5,12 @@ namespace App\Middleware;
 use App\Middleware\MiddlewareInterface;
 
 use App\Services\Auth;
-class RedirectIfAuth implements MiddlewareInterface
+class AuthMiddleware implements MiddlewareInterface
 {
     public function handle($request,$next)
     {
-        if (Auth::check()) {
-            header('Location: /');
+        if (!Auth::check()) {
+            header('Location: /login');
             exit;
         }
 

@@ -6,12 +6,7 @@ Home
 
 <?php App\Services\View::startSection('content');  ?>
 <div class="p-16">
-    <?php
-    
-    //session_start();
-    echo $_SESSION['user'];
 
-    ?>
     <div class="w-full">
             <a href="/user/add" class="btn btn-accent">Add</a>
     </div>
