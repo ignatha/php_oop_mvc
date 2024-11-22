@@ -8,3 +8,4 @@ Cara menjalankan :
 > php -S localhost:8080 public/index.php
 
 oke oke oke oce danda
+punya ku
