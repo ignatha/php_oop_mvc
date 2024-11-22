@@ -6,3 +6,5 @@ Cara menjalankan :
 
  2. running dev server php
 > php -S localhost:8080 public/index.php
+
+oke oke
