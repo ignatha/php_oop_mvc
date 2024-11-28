@@ -2,9 +2,14 @@
 namespace App;
 
 use App\Services\Route;
-use App\Middleware\{AuthMiddleware, RedirectIfAuth};
+use App\Middleware\{AuthMiddleware, RedirectIfAuth,ClearOldInputMiddleware};
 
 $route = new Route;
+
+// Global Middleware
+$route->middleware([
+    ClearOldInputMiddleware::class
+]);
 
 $route->get('/','HomeController@index',[AuthMiddleware::class]);
 $route->get('/login','HomeController@login',[RedirectIfAuth::class]);

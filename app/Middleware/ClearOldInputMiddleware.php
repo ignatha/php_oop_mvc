@@ -3,22 +3,18 @@
 namespace App\Middleware;
 
 use App\Middleware\MiddlewareInterface;
+use App\Services\Input;
 
-class BannedAccount implements MiddlewareInterface
+class ClearOldInputMiddleware implements MiddlewareInterface
 {
     public function handle($request,$next)
     {
-        if (true) {
-            echo "User ini kena banned";
-            // exit;
-        }
-
         $next();
     }
 
     public function terminate($request,$response)
     {
-        $response();
+        Input::clearOldInput();
+        $response();       
     }
-
 }

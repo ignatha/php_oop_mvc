@@ -16,4 +16,9 @@ class RedirectIfAuth implements MiddlewareInterface
 
         $next();
     }
+
+    public function terminate($request,$response)
+    {
+        $response();   
+    }
 }

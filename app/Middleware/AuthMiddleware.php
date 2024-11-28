@@ -16,4 +16,9 @@ class AuthMiddleware implements MiddlewareInterface
 
         $next();
     }
+
+    public function terminate($request,$response)
+    {
+        $response();        
+    }
 }
