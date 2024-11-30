@@ -6,6 +6,11 @@ class Route {
     protected $routes = [];
     protected $middleware = [];
 
+    public function middleware(array $middleware)
+    {
+        $this->middleware = $middleware;
+    }
+
     public function get($route,$action, $middleware = [])
     {
         $new = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_/-]+)', $route);
@@ -29,8 +34,13 @@ class Route {
             if (preg_match($regex, $url, $matches)) {
 
                 $params = array_filter($matches,'is_string',ARRAY_FILTER_USE_KEY);
+                
+                // tambahkan ke dalam middleware
+                foreach ($value['middleware'] as $middleware) {
+                    $this->middleware[] = $middleware;
+                }
 
-                $this->action($value['action'],$params,$value['middleware']);
+                $this->action($value['action'],$params);
 
                 return;
             }
@@ -39,7 +49,7 @@ class Route {
         echo "404 not found";
     }
 
-    public function action($action,$params,$middleware = [])
+    public function action($action,$params)
     {
         [$controller,$method] = explode('@',$action);
         $controller = 'App\\Controller\\'.$controller;
@@ -50,20 +60,27 @@ class Route {
 
                 $next = fn() => call_user_func_array([$instance,$method],$params); // eksekusi action
 
+                $terminate = function () {return;};
                 // jalankan middleware sebelum action controller
-                foreach ($middleware as $middlewareInst) {
+                foreach ($this->middleware as $middlewareInst) {
                     if (class_exists($middlewareInst)) { 
                         $middlewareClass = new $middlewareInst;
 
-                        if (method_exists($middlewareClass,'handle')) {
+                        if (method_exists($middlewareClass,'handle') && method_exists($middlewareClass,'terminate')) {
                             $next = function() use($middlewareClass, $next) {
                                 return $middlewareClass->handle($_REQUEST,$next);
                             };
+
+                            $terminate = function() use($middlewareClass, $terminate) {
+                                return $middlewareClass->terminate($_REQUEST,$terminate);
+                            };
                         }
+
                     }
                 }
 
                 $next();
+                $terminate();
             }else {
                 echo "Method {$method} tidak ditemukan";
             }

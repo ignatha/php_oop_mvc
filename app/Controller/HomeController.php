@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Services\View;
+use App\Services\{Auth,Validator,Flash,View,Redirect};
 use App\Model\User;
-use App\Services\Auth;
 
 class HomeController {
 
@@ -30,18 +29,38 @@ class HomeController {
 
     public function loginStore()
     {
+        $data = $_POST;
+        $validator = new Validator();
+
+        // Validasi input
+        $validator->validate($data, [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            // Set error messages in flash
+            foreach ($validator->errors() as $field => $messages) {
+                foreach ($messages as $message) {
+                    Flash::set("error_{$field}", $message);
+                }
+            }
+
+            Redirect::back($data);
+        }
+
         $user = new User();
 
-        $data_user = $user->where('username','=',$_REQUEST['username'])->first();
+        $data_user = $user->where('username','=',$data['username'])->first();
 
-        if(Auth::verifyPassword($_REQUEST['password'],$data_user->password)){
+        if($data_user && Auth::verifyPassword($data['password'],$data_user->password)){
             Auth::login($data_user);
 
             header('Location: /');
             exit;
         }else {
-            header('Location: /login');
-            exit;
+            Flash::set("login_error", "Credential not match our records");
+            Redirect::back($data);
         }
 
     }
