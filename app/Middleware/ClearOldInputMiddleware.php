@@ -2,15 +2,11 @@
 
 namespace App\Middleware;
 
-use App\Middleware\MiddlewareInterface;
+use App\Middleware\Middleware;
 use App\Services\Input;
 
-class ClearOldInputMiddleware implements MiddlewareInterface
+class ClearOldInputMiddleware extends Middleware
 {
-    public function handle($request,$next)
-    {
-        $next();
-    }
 
     public function terminate($request,$response)
     {

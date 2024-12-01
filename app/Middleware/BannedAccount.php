@@ -2,9 +2,9 @@
 
 namespace App\Middleware;
 
-use App\Middleware\MiddlewareInterface;
+use App\Middleware\Middleware;
 
-class BannedAccount implements MiddlewareInterface
+class BannedAccount extends Middleware
 {
     public function handle($request,$next)
     {
@@ -14,11 +14,6 @@ class BannedAccount implements MiddlewareInterface
         }
 
         $next();
-    }
-
-    public function terminate($request,$response)
-    {
-        $response();
     }
 
 }

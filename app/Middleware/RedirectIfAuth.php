@@ -2,10 +2,10 @@
 
 namespace App\Middleware;
 
-use App\Middleware\MiddlewareInterface;
+use App\Middleware\Middleware;
 
 use App\Services\Auth;
-class RedirectIfAuth implements MiddlewareInterface
+class RedirectIfAuth extends Middleware
 {
     public function handle($request,$next)
     {
@@ -17,8 +17,4 @@ class RedirectIfAuth implements MiddlewareInterface
         $next();
     }
 
-    public function terminate($request,$response)
-    {
-        $response();   
-    }
 }
