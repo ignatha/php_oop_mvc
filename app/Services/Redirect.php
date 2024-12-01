@@ -14,5 +14,17 @@ class Redirect
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit; 
     }
+
+    public static function to($url)
+    {
+        if (empty($url)) {
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit; 
+        } else {
+
+            header('Location: ' . $url);
+            exit; 
+        }
+    }
     
 }

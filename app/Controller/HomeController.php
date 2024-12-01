@@ -56,8 +56,7 @@ class HomeController {
         if($data_user && Auth::verifyPassword($data['password'],$data_user->password)){
             Auth::login($data_user);
 
-            header('Location: /');
-            exit;
+            Redirect::to('/');
         }else {
             Flash::set("login_error", "Credential not match our records");
             Redirect::back($data);
@@ -68,8 +67,7 @@ class HomeController {
     public function logout()
     {
         Auth::logout();
-        header('Location: /login');
-        exit;
+        Redirect::to('/login');
     }
 
     public function add()
@@ -90,7 +88,7 @@ class HomeController {
         ]);
 
         if ($simpan) {
-            header("Location: /");
+            Redirect::to('/');
         }
 
     }
@@ -121,7 +119,7 @@ class HomeController {
         ]);
 
         if ($simpan) {
-            header("Location: /");
+            Redirect::to('/');
         }
 
     }
@@ -134,7 +132,7 @@ class HomeController {
         $simpan = $user->delete($id);
 
         if ($simpan) {
-            header("Location: /");
+            Redirect::to('/');
         }
 
     }
