@@ -30,44 +30,47 @@ class HomeController {
     public function loginStore()
     {
         $data = $_POST;
-        $validator = new Validator();
+        var_dump($data);
+        // $validator = new Validator();
 
-        // Validasi input
-        $validator->validate($data, [
-            'username' => 'required',
-            'password' => 'required'
-        ]);
+        // // Validasi input
+        // $validator->validate($data, [
+        //     'username' => 'required',
+        //     'password' => 'required'
+        // ]);
 
-        if ($validator->fails()) {
-            // Set error messages in flash
-            foreach ($validator->errors() as $field => $messages) {
-                foreach ($messages as $message) {
-                    Flash::set("error_{$field}", $message);
-                }
-            }
+        // if ($validator->fails()) {
+        //     // Set error messages in flash
+        //     foreach ($validator->errors() as $field => $messages) {
+        //         foreach ($messages as $message) {
+        //             Flash::set("error_{$field}", $message);
+        //         }
+        //     }
 
-            Redirect::back($data);
-        }
+        //     Redirect::back($data);
+        // }
 
-        $user = new User();
+        // $user = new User();
 
-        $data_user = $user->where('username','=',$data['username'])->first();
+        // $data_user = $user->where('username','=',$data['username'])->first();
 
-        if($data_user && Auth::verifyPassword($data['password'],$data_user->password)){
-            Auth::login($data_user);
+        // if($data_user && Auth::verifyPassword($data['password'],$data_user->password)){
+        //     Auth::login($data_user);
 
-            Redirect::to('/');
-        }else {
-            Flash::set("login_error", "Credential not match our records");
-            Redirect::back($data);
-        }
+        //     header('Location: /');
+        //     exit;
+        // }else {
+        //     Flash::set("login_error", "Credential not match our records");
+        //     Redirect::back($data);
+        // }
 
     }
 
     public function logout()
     {
         Auth::logout();
-        Redirect::to('/login');
+        header('Location: /login');
+        exit;
     }
 
     public function add()
@@ -88,7 +91,8 @@ class HomeController {
         ]);
 
         if ($simpan) {
-            Redirect::to('/');
+            header('Location: /');
+            exit;
         }
 
     }
@@ -119,7 +123,8 @@ class HomeController {
         ]);
 
         if ($simpan) {
-            Redirect::to('/');
+            header('Location: /');
+            exit;
         }
 
     }
@@ -132,7 +137,8 @@ class HomeController {
         $simpan = $user->delete($id);
 
         if ($simpan) {
-            Redirect::to('/');
+            header('Location: /');
+            exit;
         }
 
     }

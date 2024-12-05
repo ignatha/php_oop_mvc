@@ -2,11 +2,10 @@
 namespace App;
 
 use App\Services\Route;
-use App\Middleware\{AuthMiddleware, RedirectIfAuth,ClearOldInputMiddleware};
+use App\Middleware\{AuthMiddleware, RedirectIfAuth, ClearOldInputMiddleware};
 
 $route = new Route;
 
-// Global Middleware
 $route->middleware([
     ClearOldInputMiddleware::class
 ]);

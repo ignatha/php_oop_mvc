@@ -4,7 +4,7 @@ namespace App\Services;
 
 class Route {
     protected $routes = [];
-    protected $middleware = [];
+    protected $middleware = []; // untuk menampung middleware global
 
     public function middleware(array $middleware)
     {
@@ -37,7 +37,7 @@ class Route {
                 
                 // tambahkan ke dalam middleware
                 foreach ($value['middleware'] as $middleware) {
-                    $this->middleware[] = $middleware;
+                    $this->middleware[] = $middleware; // disimpan di dalam property middleware
                 }
 
                 $this->action($value['action'],$params);
@@ -58,9 +58,9 @@ class Route {
             $instance = new $controller();
             if (method_exists($instance,$method)) {
 
-                $next = fn() => call_user_func_array([$instance,$method],$params); // eksekusi action
+                $next = fn() => call_user_func_array([$instance,$method],$params); // eksekusi sebelum respond
 
-                $terminate = function () {return;};
+                $terminate = function () {return;}; // di eksekusi sesudah respond .. default mengeksekusi kosong
                 // jalankan middleware sebelum action controller
                 foreach ($this->middleware as $middlewareInst) {
                     if (class_exists($middlewareInst)) { 
@@ -79,8 +79,8 @@ class Route {
                     }
                 }
 
-                $next();
-                $terminate();
+                $next(); // deeksekusi duluan sebelum controller / respond
+                $terminate(); // diekseskusi setelah respond
             }else {
                 echo "Method {$method} tidak ditemukan";
             }

@@ -7,10 +7,10 @@ use App\Services\Input;
 
 class ClearOldInputMiddleware extends Middleware
 {
-
     public function terminate($request,$response)
     {
         Input::clearOldInput();
-        $response();       
+        $response();
     }
+
 }

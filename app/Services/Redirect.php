@@ -3,28 +3,16 @@ namespace App\Services;
 
 use App\Services\Input;
 
-class Redirect
-{
+class Redirect {
+    
     public static function back(array $input)
     {
         if (!empty($input)) {
             Input::withInput($input);
         }
 
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit; 
+        header('Location: '.$_SERVER['HTTP_REFERER']);
+        exit;
     }
 
-    public static function to($url)
-    {
-        if (empty($url)) {
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit; 
-        } else {
-
-            header('Location: ' . $url);
-            exit; 
-        }
-    }
-    
 }
