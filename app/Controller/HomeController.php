@@ -30,39 +30,39 @@ class HomeController {
     public function loginStore()
     {
         $data = $_POST;
-        var_dump($data);
-        // $validator = new Validator();
+        
+        $validator = new Validator();
 
-        // // Validasi input
-        // $validator->validate($data, [
-        //     'username' => 'required',
-        //     'password' => 'required'
-        // ]);
+        // Validasi input
+        $validator->validate($data, [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
 
-        // if ($validator->fails()) {
-        //     // Set error messages in flash
-        //     foreach ($validator->errors() as $field => $messages) {
-        //         foreach ($messages as $message) {
-        //             Flash::set("error_{$field}", $message);
-        //         }
-        //     }
+        if ($validator->fails()) {
+            // Set error messages in flash
+            foreach ($validator->errors() as $field => $messages) {
+                foreach ($messages as $message) {
+                    Flash::set("error_{$field}", $message);
+                }
+            }
 
-        //     Redirect::back($data);
-        // }
+            Redirect::back($data);
+        }
 
-        // $user = new User();
+        $user = new User();
 
-        // $data_user = $user->where('username','=',$data['username'])->first();
+        $data_user = $user->where('username','=',$data['username'])->first();
 
-        // if($data_user && Auth::verifyPassword($data['password'],$data_user->password)){
-        //     Auth::login($data_user);
+        if($data_user && Auth::verifyPassword($data['password'],$data_user->password)){
+            Auth::login($data_user);
 
-        //     header('Location: /');
-        //     exit;
-        // }else {
-        //     Flash::set("login_error", "Credential not match our records");
-        //     Redirect::back($data);
-        // }
+            header('Location: /');
+            exit;
+        }else {
+            Flash::set("login_error", "Credential not match our records");
+            Redirect::back($data);
+        }
 
     }
 
