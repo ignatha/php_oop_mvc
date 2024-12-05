@@ -58,10 +58,10 @@ class Route {
             $instance = new $controller();
             if (method_exists($instance,$method)) {
 
-                $next = fn() => call_user_func_array([$instance,$method],$params); // eksekusi sebelum respond
+                $next = fn() => call_user_func_array([$instance,$method],$params); // eksekusi sebelum respond .. default eksekusi method di controller
 
                 $terminate = function () {return;}; // di eksekusi sesudah respond .. default mengeksekusi kosong
-                // jalankan middleware sebelum action controller
+
                 foreach ($this->middleware as $middlewareInst) {
                     if (class_exists($middlewareInst)) { 
                         $middlewareClass = new $middlewareInst;
@@ -69,11 +69,11 @@ class Route {
                         if (method_exists($middlewareClass,'handle') && method_exists($middlewareClass,'terminate')) {
                             $next = function() use($middlewareClass, $next) {
                                 return $middlewareClass->handle($_REQUEST,$next);
-                            };
+                            }; // mengupdate value dari next dengan method handle di middleware yang akan dijalankan sebelum user menerima respond
 
                             $terminate = function() use($middlewareClass, $terminate) {
                                 return $middlewareClass->terminate($_REQUEST,$terminate);
-                            };
+                            }; // mengupdate value dari terminate dengan method terminate middleware yang akan dijalankan setelah user menerima respond
                         }
 
                     }

@@ -8,9 +8,9 @@ $route = new Route;
 
 $route->middleware([
     ClearOldInputMiddleware::class
-]);
+]);  // middleware global yang akan dijalankan di setiap request
 
-$route->get('/','HomeController@index',[AuthMiddleware::class]);
+$route->get('/','HomeController@index',[AuthMiddleware::class]); // route middleware dijalankan spesifik tiap route yang di definisikan
 $route->get('/login','HomeController@login',[RedirectIfAuth::class]);
 $route->post('/login','HomeController@loginStore',[RedirectIfAuth::class]);
 
