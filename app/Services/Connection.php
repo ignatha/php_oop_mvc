@@ -4,9 +4,9 @@ namespace App\Services;
 
 class Connection {
     
-    protected $host = 'localhost';
+    protected $host = '127.0.0.1';
     protected $db = 'belajar';
-    protected $username = 'root';
+    protected $username = 'ignatha';
     protected $pass = 'aku';
     protected $conn = null;
 

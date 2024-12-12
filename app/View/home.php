@@ -43,6 +43,7 @@ Home
             </tbody>
         </table>
     </div>
+    <?php App\Services\View::include('layout.pagination',['pagination' => $paginationData]);  ?>
 </div>
 <?php App\Services\View::endSection();  ?>
 

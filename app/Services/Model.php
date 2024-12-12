@@ -116,7 +116,41 @@ class Model extends Connection {
         return $this->stmt->fetch();
     }
 
-    
+    public function paginate($perPage = 10, $currentPage = 1)
+    {
+        // data mulai yang akan di cari
+        $offset = ($currentPage - 1)  * $perPage;
+
+        // query untuk ambil data
+        $sql = "SELECT * FROM {$this->table} LIMIT :limit OFFSET :offset";
+        $stmt = $this->connect()->prepare($sql);
+
+        $stmt->bindValue(':limit',$perPage, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset',$offset, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $data = $stmt->fetchAll();
+
+        // query untuk menghitung total semua data
+        $countStmt = $this->connect()->prepare("SELECT COUNT(*) as total FROM {$this->table}");
+        $countStmt->execute();
+
+        $total = $countStmt->fetch()->total;
+
+        $totalPages = ceil($total / $perPage);
+
+        return [
+            'data' => $data,
+            'pagination' => [
+                'current_page' => $currentPage,
+                'per_page' => $perPage,
+                'total' => $total,
+                'total_pages' => $totalPages
+            ]
+        ];
+
+
+    }
 
 
 

@@ -25,7 +25,7 @@ class Route {
 
     public function run()
     {
-        $url = $_SERVER['REQUEST_URI'];
+        $url = $this->cleanUrl($_SERVER['REQUEST_URI']);
         $method = strtoupper($_SERVER['REQUEST_METHOD']);
 
         foreach ($this->routes[$method] as $route => $value) {
@@ -88,6 +88,18 @@ class Route {
         } else {
             echo "Controller {$controller} tidak ditemukan";
         }
+    }
+
+    protected function cleanUrl($url)
+    {
+        if ($url !== '/' && substr($url.-1) === '/') {
+            $url = rtrim($url,'/');
+        }
+
+        $praseUrl = parse_url($url);
+        $cleanUrl = $praseUrl['path'];
+
+        return $cleanUrl;
     }
 
 }

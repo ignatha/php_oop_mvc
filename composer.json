@@ -12,7 +12,5 @@
             "email": "prabowoid.2@gmail.com"
         }
     ],
-    "require": {
-        "nesbot/carbon": "^3.8"
-    }
+    "require": {}
 }

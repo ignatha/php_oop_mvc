@@ -8,12 +8,16 @@ use App\Model\User;
 class HomeController {
 
     public function index(){
+
+        $currentPage = $_GET['page'] ?? 1;
+
         $user = new User();
 
-        $data_user = $user->all();
+        $paginationData = $user->paginate(2,$currentPage);
 
         $data = [
-            'users' => $data_user
+            'users' => $paginationData['data'],
+            'paginationData' => $paginationData['pagination']
         ];
 
         $view = new View();
