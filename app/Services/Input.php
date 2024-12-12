@@ -4,7 +4,7 @@ namespace App\Services;
 class Input {
     public static function withInput(array $data)
     {
-        if (session_status() === PHP_SESSION_NONE) {
+        if (!isset($_SESSION)) {
             session_start();
         }
 
@@ -13,7 +13,7 @@ class Input {
 
     public static function old($key, $default = null)
     {
-        if (session_status() === PHP_SESSION_NONE) {
+        if (!isset($_SESSION)) {
             session_start();
         }
 
@@ -24,10 +24,8 @@ class Input {
 
     public static function clearOldInput()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+        if (isset($_SESSION)) {
+            unset($_SESSION['old_input']);
         }
-
-        unset($_SESSION['old_input']);
     }
 }
