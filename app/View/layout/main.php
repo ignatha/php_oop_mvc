@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="/public/css/app.css" type="text/css">
         <script src="https://cdn.tailwindcss.com"></script>
         <title><?php App\Services\View::yieldSection('title'); ?></title>
     </head>
@@ -14,7 +15,7 @@
 </head>
 <body>
     <?php App\Services\View::include('layout.navbar'); ?>
-    <div class="w-full">
+    <div id="test" class="w-full">
         <?php App\Services\View::yieldSection('content'); ?>
     </div>
     <?php App\Services\View::include('layout.footer'); ?>

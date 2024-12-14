@@ -10,6 +10,9 @@ Home
     <div class="w-full">
             <a href="/user/add" class="btn btn-accent">Add</a>
     </div>
+    <div>
+        <img src="/public/img/test.png" alt="test">
+    </div>
     <div class="overflow-x-auto">
         <table class="table">
             <!-- head -->
@@ -58,5 +61,5 @@ Home
 
 
 <?php App\Services\View::startSection('js');  ?>
-<script src="app.js"></script>
+
 <?php App\Services\View::endSection();  ?>
