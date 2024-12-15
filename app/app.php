@@ -10,7 +10,7 @@ $route->middleware([
     ClearOldInputMiddleware::class
 ]);  // middleware global yang akan dijalankan di setiap request
 
-$route->get('/public/{path:*}',function($path){
+$route->get('/assets/{path:*}',function($path){
     
     // mengambil folder nya
     $filePath = __DIR__ . "/../public/{$path}";

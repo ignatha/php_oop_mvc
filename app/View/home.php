@@ -11,7 +11,7 @@ Home
             <a href="/user/add" class="btn btn-accent">Add</a>
     </div>
     <div>
-        <img src="/public/img/test.png" alt="test">
+        <img src="/assets/img/test.png" alt="test">
     </div>
     <div class="overflow-x-auto">
         <table class="table">
