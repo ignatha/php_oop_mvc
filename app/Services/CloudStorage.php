@@ -14,12 +14,12 @@ class CloudStorage implements FileStorageInterface
     public function __construct()
     {
         $config = [
-            'region'  => 'auto',
-            'bucket'  => 'web',
-            'account_id' => "",
-            'access_key_id' => "",
-            'access_key_secret' => "",
-            'endpoint' => "",
+            'region'  => getenv('AWS_DEFAULT_REGION') ?? 'auto',
+            'bucket'  => getenv('AWS_BUCKET') ?? null,
+            'account_id' => getenv('AWS_ACCOUNT_ID') ?? null,
+            'access_key_id' => getenv('AWS_SECRET_ACCESS_KEY') ?? null,
+            'access_key_secret' => getenv('AWS_SECRET_ACCESS_KEY_SECRET') ?? null,
+            'endpoint' => getenv('AWS_ENDPOINT') ?? null,
         ];
 
         $credentials = new Credentials($config['access_key_id'], $config['access_key_secret']);

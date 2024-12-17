@@ -4,3 +4,4 @@ vendor
 *.lock
 /storage
 public/uploads
+.env

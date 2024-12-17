@@ -1,8 +1,10 @@
 <?php
 namespace App;
 
-use App\Services\Route;
+use App\Services\{Route, EnvLoader};
 use App\Middleware\{AuthMiddleware, RedirectIfAuth, ClearOldInputMiddleware};
+
+EnvLoader::load(__DIR__ .'/../.env');
 
 $route = new Route;
 
