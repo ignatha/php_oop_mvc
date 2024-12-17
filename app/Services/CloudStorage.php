@@ -16,10 +16,10 @@ class CloudStorage implements FileStorageInterface
         $config = [
             'region'  => 'auto',
             'bucket'  => 'web',
-            'account_id' => "721a053148a2d968efcea7bd0cfbcae1",
-            'access_key_id' => "fd67378b88474bcc9b75934454f557b3",
-            'access_key_secret' => "57ba5add9fa6fe405a7ca8d8a72fbef0142de79941ae528becfb72f1054e24fb",
-            'endpoint' => 'https://721a053148a2d968efcea7bd0cfbcae1.r2.cloudflarestorage.com',
+            'account_id' => "",
+            'access_key_id' => "",
+            'access_key_secret' => "",
+            'endpoint' => "",
         ];
 
         $credentials = new Credentials($config['access_key_id'], $config['access_key_secret']);
