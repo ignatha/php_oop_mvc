@@ -22,6 +22,7 @@ Home
                 <th>Username</th>
                 <th>Name</th>
                 <th>Password</th>
+                <th>Image</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -33,6 +34,10 @@ Home
                     <td><?=$value->username?></td>
                     <td><?=$value->name?></td>
                     <td><?=$value->password?></td>
+                    <td><?php if ($value->img): ?>
+                        <img src="<?=App\Services\LocalStorage::getUrl($value->img);?>" alt="<?=$value->username?>">
+                    <?php endif; ?>
+                    </td>
                     <td>
                         <a href="/user/edit/<?=$value->id?>" class="btn btn-info">Edit</a>
 

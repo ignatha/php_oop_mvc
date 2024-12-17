@@ -6,7 +6,7 @@ Home
 
 <?php App\Services\View::startSection('content');  ?>
 <div class="p-16">
-<form action="/user/add" method="POST" class="w-full gap-4 flex flex-col">
+<form action="/user/add" method="POST" class="w-full gap-4 flex flex-col" enctype="multipart/form-data">
         <div class="w-full">
             <label class="input input-bordered flex items-center gap-2">
                 <input type="text" class="grow" name="username" placeholder="Username" />
@@ -20,6 +20,11 @@ Home
         <div class="w-full">
             <label class="input input-bordered flex items-center gap-2">
             <input type="password" class="grow" name="password" placeholder="Password" />
+            </label>
+        </div>
+        <div class="w-full">
+            <label class="input input-bordered flex items-center gap-2">
+            <input type="file" class="grow" name="img" />
             </label>
         </div>
         <div class="w-full">
