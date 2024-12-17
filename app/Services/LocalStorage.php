@@ -8,7 +8,7 @@ class LocalStorage implements FileStorageInterface
 
     public function __construct()
     {
-        self::$basePath = rtrim(__DIR__ . '/../../public/', '/') . '/';
+        self::$basePath = rtrim(__DIR__ . '/../../storage/public', '/') . '/';
     }
 
 
@@ -43,7 +43,7 @@ class LocalStorage implements FileStorageInterface
     public static function getUrl($path)
     {
         $instance = new self();
-        return '/assets/'.ltrim($path, '/');
+        return '/assets/uploads/'.ltrim($path, '/');
     }
 
     public static function name($name, $separator = '-',$folder) {

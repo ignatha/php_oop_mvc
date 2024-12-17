@@ -14,7 +14,7 @@ $route->get('/assets/{path:*}',function($path){
     
     // mengambil folder nya
     $filePath = __DIR__ . "/../public/{$path}";
-
+    
     // cek apakah file ada
     if (file_exists($filePath) && is_file($filePath)) {
 
