@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Services\{Auth,Validator,Flash,View,Redirect};
+use App\Services\LocalStorage as Storage;
 use App\Model\User;
 
 class HomeController {
@@ -85,13 +86,27 @@ class HomeController {
 
     public function store()
     {
+        $fileName = null;
+        if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['img'];
+            $fileName = Storage::name($file['name'],'_','img');
+
+            try {
+                $path = Storage::upload($file, $fileName);
+
+            } catch (\Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
+
+        }
 
         $user = new User();
 
         $simpan = $user->create([
             'username' => $_POST['username'],
             'name' => $_POST['name'],
-            'password' => Auth::bcrypt($_POST['password'])
+            'password' => Auth::bcrypt($_POST['password']),
+            'img' => $fileName
         ]);
 
         if ($simpan) {
@@ -137,6 +152,14 @@ class HomeController {
     {
 
         $user = new User();
+
+        $getUser = $user->find($id);
+
+        try {
+            Storage::delete($getUser->img);
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
 
         $simpan = $user->delete($id);
 

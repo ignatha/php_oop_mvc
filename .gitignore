@@ -2,3 +2,6 @@ vendor
 /vendor
 /vendor/*
 *.lock
+/storage
+public/uploads
+.env

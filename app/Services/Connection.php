@@ -4,14 +4,15 @@ namespace App\Services;
 
 class Connection {
     
-    protected $host = '127.0.0.1';
-    protected $db = 'belajar';
-    protected $username = 'ignatha';
-    protected $pass = 'aku';
     protected $conn = null;
 
     public function connect()
     {
+
+        $host = getenv('DB_HOST');
+        $db = getenv('DB_DATABASE');
+        $username = getenv('DB_USERNAME');
+        $pass = getenv('DB_PASSWORD');
 
         $options = [
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
@@ -20,8 +21,8 @@ class Connection {
         ];
 
         try {
-            $rule = "mysql:host=".$this->host.";dbname=".$this->db;
-            $this->conn = new \PDO($rule,$this->username, $this->pass, $options);
+            $rule = "mysql:host=".$host.";dbname=".$db;
+            $this->conn = new \PDO($rule,$username, $pass, $options);
         } catch (\PDOException $e) {
             echo 'Connection Error: ' . $e->getMessage();
         }

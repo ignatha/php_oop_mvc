@@ -1,8 +1,10 @@
 <?php
 namespace App;
 
-use App\Services\Route;
+use App\Services\{Route, EnvLoader};
 use App\Middleware\{AuthMiddleware, RedirectIfAuth, ClearOldInputMiddleware};
+
+EnvLoader::load(__DIR__ .'/../.env');
 
 $route = new Route;
 
@@ -14,7 +16,7 @@ $route->get('/assets/{path:*}',function($path){
     
     // mengambil folder nya
     $filePath = __DIR__ . "/../public/{$path}";
-
+    
     // cek apakah file ada
     if (file_exists($filePath) && is_file($filePath)) {
 

@@ -12,5 +12,7 @@
             "email": "prabowoid.2@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "aws/aws-sdk-php": "^3.334"
+    }
 }
